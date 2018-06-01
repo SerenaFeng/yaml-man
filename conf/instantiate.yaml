@@ -1,0 +1,6 @@
+---
+- render
+    name: test-render
+    description: render yaml file
+    image: yaml-man
+    assure: True

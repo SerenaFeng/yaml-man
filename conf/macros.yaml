@@ -1,0 +1,18 @@
+---
+- macro:
+    name: test-parameters
+    parameters:
+      - string:
+          name: CONF_PATH
+          default: './conf'
+          description: "YAML configuration path"
+
+      - bool:
+          name: ASSURE
+          default: '{assure}'
+          description: "just check bool"
+
+- macro:
+    name: test-use-parameter
+    usages:
+      - '$CONF_PATH:$ASSURE'

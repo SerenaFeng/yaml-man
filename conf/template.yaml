@@ -1,0 +1,11 @@
+- template:
+    name: test-template
+    description: test template
+    parameters:
+      - test-parameters:
+          assure: '{assure}'
+    content:
+      image: '{image}'
+      privileged: True
+      usages:
+        - test-use-parameter
