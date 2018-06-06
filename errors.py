@@ -1,0 +1,3 @@
+class YamlManException(Exception):
+    pass
+

@@ -1,11 +1,18 @@
 - template:
-    name: test-template
-    description: test template
-    parameters:
-      - test-parameters:
-          assure: '{assure}'
-    content:
+    name: '{functest_testcase}'
+    fullname: '{fullname}'
+    description: functest container
+    trigger:
       image: '{image}'
       privileged: True
-      usages:
-        - test-use-parameter
+      volumes:
+        - conf_volume
+
+- obj:
+    name: '{yardstick_testcase}'
+    description: yardstick container
+    trigger:
+      image: '{image}'
+      privileged: True
+      volumes:
+        - conf_volume

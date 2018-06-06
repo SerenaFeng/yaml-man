@@ -1,18 +1,11 @@
 ---
 - macro:
-    name: test-parameters
-    parameters:
-      - string:
-          name: CONF_PATH
-          default: './conf'
-          description: "YAML configuration path"
-
-      - bool:
-          name: ASSURE
-          default: '{assure}'
-          description: "just check bool"
+    name: conf_volume
+    volumes:
+      - '{CONF_PATH}:{ASSURE}'
+      - inner_volume
 
 - macro:
-    name: test-use-parameter
-    usages:
-      - '$CONF_PATH:$ASSURE'
+    name: inner_volume
+    volumes:
+      - '{CONF_PATH}:{ASSURE}'

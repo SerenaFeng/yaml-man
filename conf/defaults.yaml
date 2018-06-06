@@ -1,0 +1,7 @@
+---
+# defaults
+
+- defaults:
+    name: global
+    CONF_PATH: './conf'
+    ASSURE: True

@@ -1,0 +1,9 @@
+---
+- project:
+    name: vping
+    description: vping test case
+    fullname: functest.vping
+    image: yaml-man
+    functest_testcase: vping
+    objs:
+      - '{functest_testcase}'
