@@ -10,7 +10,6 @@
             CONF_PATH: '{CONF_PATH}'
             ASSURE: '{ASSURE}'
 
-
 #- obj:
 #    name: '{yardstick_testcase}'
 #    description: yardstick container

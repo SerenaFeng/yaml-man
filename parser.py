@@ -197,8 +197,52 @@ class YamlParser(object):
 
 
     def renderYaml(self):
-        self.objs = [self._render_obj(obj) for obj in self.objs]
+        self.objs = [self._render_obj2(obj)[1] for obj in self.objs]
         print self.objs
+
+    def _render_obj2(self, obj):
+        is_macro = False
+        if isinstance(obj, list):
+            ret = type(obj)()
+            for item in obj:
+                im, reti = self._render_obj2(item)
+                if im and isinstance(reti, list):
+                    for itemi in reti:
+                        ret.append(itemi)
+                else:
+                    ret.append(reti)
+        elif isinstance(obj, dict):
+            name, macro_args = next(iter(obj.items()))
+            macro = self.data.get('macro', {}).get(name)
+            if macro:
+                is_macro = True
+                ret = self._render_macro2(macro, macro_args)
+            else:
+                ret = type(obj)()
+                for k, v in obj.iteritems():
+                    im, reti = self._render_obj2(v)
+                    if im and isinstance(reti, list):
+                        ret[k] = type(reti)()
+                        for item in reti:
+                            ret[k].append(item)
+                    else:
+                        ret[k] = reti
+        else:
+            name = obj
+            macro_args = {}
+            macro = self.data.get('macro', {}).get(name)
+            if macro:
+                is_macro = True
+                ret = self._render_macro2(macro, macro_args)
+            else:
+                ret = obj
+        return is_macro, ret
+
+    def _render_macro2(self, macro, macro_args):
+        macro.pop('name')
+        m, m_data = next(iter(macro.items()))
+        _, ret = self._render_obj2(deep_format(m_data, macro_args))
+        return ret
 
     def _render_obj(self, obj):
         if isinstance(obj, list):

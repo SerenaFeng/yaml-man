@@ -12,5 +12,5 @@
 - macro:
     name: inner_volume
     volumes:
-      - src: '{CONF_PATH}'
-        dst : '{ASSURE}'
+      - srci: '{CONF_PATH}'
+        dsti: '{ASSURE}'
