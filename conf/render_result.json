@@ -1,0 +1,39 @@
+{
+  "fullname": "functest.vping",
+  "trigger": {
+    "volumes_list_one": [
+      {
+        "srcj": "./conf",
+        "dstj": "True"
+      }
+    ],
+    "volumes_list_list": [
+      {
+        "src": "./conf",
+        "dst": "True"
+      },
+      {
+        "srci": "./conf",
+        "dsti": "True"
+      },
+      {
+        "srcj": "./conf",
+        "dstj": "True"
+      }
+    ],
+    "volumes_one_one": {
+      "srcj": "./conf",
+      "dstj": "True"
+    },
+    "volumes_one_list": [
+      {
+        "srci": "./conf",
+        "dsti": "True"
+      }
+    ],
+    "privileged": true,
+    "image": "yaml-man"
+  },
+  "name": "vping",
+  "description": "vping test case"
+}

@@ -2,6 +2,7 @@ import copy
 import fnmatch
 import io
 import itertools
+import json
 import logging
 
 import yaml
@@ -195,17 +196,16 @@ class YamlParser(object):
 
             self.objs.append(expanded)
 
-
     def renderYaml(self):
-        self.objs = [self._render_obj2(obj)[1] for obj in self.objs]
-        print self.objs
+        self.objs = [self._render_obj(obj)[1] for obj in self.objs]
+        print json.dumps(self.objs)
 
-    def _render_obj2(self, obj):
+    def _render_obj(self, obj):
         is_macro = False
         if isinstance(obj, list):
             ret = type(obj)()
             for item in obj:
-                im, reti = self._render_obj2(item)
+                im, reti = self._render_obj(item)
                 if im and isinstance(reti, list):
                     for itemi in reti:
                         ret.append(itemi)
@@ -216,11 +216,11 @@ class YamlParser(object):
             macro = self.data.get('macro', {}).get(name)
             if macro:
                 is_macro = True
-                ret = self._render_macro2(macro, macro_args)
+                ret = self._render_macro(macro, macro_args)
             else:
                 ret = type(obj)()
                 for k, v in obj.iteritems():
-                    im, reti = self._render_obj2(v)
+                    im, reti = self._render_obj(v)
                     if im and isinstance(reti, list):
                         ret[k] = type(reti)()
                         for item in reti:
@@ -233,48 +233,14 @@ class YamlParser(object):
             macro = self.data.get('macro', {}).get(name)
             if macro:
                 is_macro = True
-                ret = self._render_macro2(macro, macro_args)
+                ret = self._render_macro(macro, macro_args)
             else:
                 ret = obj
         return is_macro, ret
 
-    def _render_macro2(self, macro, macro_args):
-        macro.pop('name')
-        m, m_data = next(iter(macro.items()))
-        _, ret = self._render_obj2(deep_format(m_data, macro_args))
-        return ret
-
-    def _render_obj(self, obj):
-        if isinstance(obj, list):
-            ret = [self._render_obj(item) for item in obj]
-        elif isinstance(obj, dict):
-            name, macro_args = next(iter(obj.items()))
-            macro = self.data.get('macro', {}).get(name)
-            if macro:
-                ret = self._render_macro(macro, macro_args)
-            else:
-                ret = type(obj)()
-                for k, v in obj.iteritems():
-                    ret[k] = self._render_obj(v)
-        else:
-            name = obj
-            macro_args = {}
-            macro = self.data.get('macro', {}).get(name)
-            if macro:
-                ret = self._render_macro(macro, macro_args)
-            else:
-                ret = obj
-        return ret
-
     def _render_macro(self, macro, macro_args):
-        print '_render_macro', macro, macro_args
-        macro.pop('name')
+        if 'name' in macro:
+            macro.pop('name')
         m, m_data = next(iter(macro.items()))
-        return self._render_obj(deep_format(m_data, macro_args))
-        # if isinstance(m_data, list):
-        #     ret = [self._render_obj(deep_format(item, macro_args))
-        #            for item in m_data]
-        # else:
-        #     ret = self._render_obj(deep_format(m_data, macro_args))
-        # print '_render_macro return', ret
-        # return ret
+        _, ret = self._render_obj(deep_format(m_data, macro_args))
+        return ret

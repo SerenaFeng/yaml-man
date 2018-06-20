@@ -5,10 +5,28 @@
     trigger:
       image: '{image}'
       privileged: True
-      volumes:
-        - conf_volume:
+      volumes_list_list:
+        - nest_volume:
             CONF_PATH: '{CONF_PATH}'
             ASSURE: '{ASSURE}'
+        - single_volume:
+            CONF_PATH: '{CONF_PATH}'
+            ASSURE: '{ASSURE}'
+
+      volumes_one_list:
+        list_volume:
+          CONF_PATH: '{CONF_PATH}'
+          ASSURE: '{ASSURE}'
+
+      volumes_list_one:
+        - single_volume:
+            CONF_PATH: '{CONF_PATH}'
+            ASSURE: '{ASSURE}'
+
+      volumes_one_one:
+        single_volume:
+          CONF_PATH: '{CONF_PATH}'
+          ASSURE: '{ASSURE}'
 
 #- obj:
 #    name: '{yardstick_testcase}'

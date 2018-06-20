@@ -1,16 +1,21 @@
 ---
 - macro:
-    name: conf_volume
+    name: nest_volume
     volumes:
       - src: '{CONF_PATH}'
         dst : '{ASSURE}'
-      - inner_volume:
+      - list_volume:
           CONF_PATH: '{CONF_PATH}'
           ASSURE: '{ASSURE}'
 
-
 - macro:
-    name: inner_volume
+    name: list_volume
     volumes:
       - srci: '{CONF_PATH}'
         dsti: '{ASSURE}'
+
+- macro:
+    name: single_volume
+    volumes:
+      srcj: '{CONF_PATH}'
+      dstj: '{ASSURE}'
