@@ -2,10 +2,15 @@
 - macro:
     name: conf_volume
     volumes:
-      - '{CONF_PATH}:{ASSURE}'
-      - inner_volume
+      - src: '{CONF_PATH}'
+        dst : '{ASSURE}'
+      - inner_volume:
+          CONF_PATH: '{CONF_PATH}'
+          ASSURE: '{ASSURE}'
+
 
 - macro:
     name: inner_volume
     volumes:
-      - '{CONF_PATH}:{ASSURE}'
+      - src: '{CONF_PATH}'
+        dst : '{ASSURE}'

@@ -6,13 +6,16 @@
       image: '{image}'
       privileged: True
       volumes:
-        - conf_volume
+        - conf_volume:
+            CONF_PATH: '{CONF_PATH}'
+            ASSURE: '{ASSURE}'
 
-- obj:
-    name: '{yardstick_testcase}'
-    description: yardstick container
-    trigger:
-      image: '{image}'
-      privileged: True
-      volumes:
-        - conf_volume
+
+#- obj:
+#    name: '{yardstick_testcase}'
+#    description: yardstick container
+#    trigger:
+#      image: '{image}'
+#      privileged: True
+#      volumes:
+#        - conf_volume
